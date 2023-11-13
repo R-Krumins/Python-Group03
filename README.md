@@ -1,5 +1,5 @@
 ## Python-pw5
-# TASK: Using Visual Studio Code environment write Python program with latter mentioned requirements.
+## TASK: Using Visual Studio Code environment write Python program with latter mentioned requirements.
 
 5.2.1. Use Fish and Bear simulated world and the accordant code (Fish, Bear, Plant and World
 classes) introduced in our lecture material (i.e. 5.2. Part material).

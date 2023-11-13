@@ -482,8 +482,7 @@ def mainSimulation():
     numberOfBears = 10
     numberOfFish = 10
     numberOfPlants = 10
-    worldLifeTime = 50
-    # worldLifeTime = 2500
+    worldLifeTime = 2500
     worldWidth = 50
     worldHeight = 25
  

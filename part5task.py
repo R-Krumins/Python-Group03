@@ -276,7 +276,7 @@ class Fish:
 
         self.tryToEat()           #try to eat
         
-        if self.__starveTick == 20:  #if not eaten for 20 ticks, die
+        if self.__starveTick == 30:  #if not eaten for 30 ticks, die
             self.__world.delThing(self)
         else:
             self.tryToMove()

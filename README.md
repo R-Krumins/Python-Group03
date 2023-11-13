@@ -1,5 +1,5 @@
 # Python-pw5
-TASK: Using Visual Studio Code environment write Python program with latter mentioned
+#TASK: Using Visual Studio Code environment write Python program with latter mentioned
 requirements.
 5.2.1. Use Fish and Bear simulated world and the accordant code (Fish, Bear, Plant and World
 classes) introduced in our lecture material (i.e. 5.2. Part material). [a] Modify the
@@ -11,5 +11,6 @@ can cause a Bear to die: starvation and energy level dropping to 0. Develop acco
 representing instance variable in class Bear and set the initial energy level (i.e. integer). Update
 accordingly class Bear to decrease energy level if bear is breeding or moving, and increase
 energy level if bear is eating. Bear is dead if energy level drops below 0.
+
 Load all the necessary classes and run the Fish and Bear simulation. In description document
 include runtime screenshots of above solutions.

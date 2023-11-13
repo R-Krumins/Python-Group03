@@ -482,7 +482,8 @@ def mainSimulation():
     numberOfBears = 10
     numberOfFish = 10
     numberOfPlants = 10
-    worldLifeTime = 2500
+    worldLifeTime = 50
+    # worldLifeTime = 2500
     worldWidth = 50
     worldHeight = 25
  
@@ -517,7 +518,7 @@ def mainSimulation():
             y = random.randrange(myWorld.getMaxY())
         myWorld.addThing(newBear, x, y)
 
-        # add plants:
+    # add plants:
     for i in range(numberOfPlants):
         newPlant = Plant()
         x = random.randrange(myWorld.getMaxX())
@@ -527,19 +528,28 @@ def mainSimulation():
             y = random.randrange(myWorld.getMaxY())
         myWorld.addThing(newPlant, x, y)
 
-    f = open("table.txt", "a")
+    all = []
     for i in range(worldLifeTime):
-        arr = []
+        myWorld.liveALittle()
+
+        row = []
         numOfFish = myWorld.countFish()
         numOfBears = myWorld.countBears()
         numOfPlants = myWorld.countPlants()
-        arr.append(str(i))
-        arr.append(str(numOfFish))
-        arr.append(str(numOfBears))
-        arr.append(str(numOfPlants))
-        f.write("Time: " + arr[0] + "; Num of Fish:  " + arr[1] + "; Num of bears: " + arr[2] +  "; Num of plants: " + arr[3] + " \n")
-        myWorld.liveALittle()
+        row.append(i)
+        row.append(numOfFish)
+        row.append(numOfBears)
+        row.append(numOfPlants)
+        all.append(row)
+        
     myWorld.freezeWorld()
+
+    f = open("table.txt", "a")
+    for i in range(len(all)):
+        row = []
+        for j in range(len(all[i])):
+            row.append(all[i][j])
+        f.write("Time: " + str(row[0]) + "; Num of Fish:  " + str(row[1]) + "; Num of bears: " + str(row[2]) +  "; Num of plants: " + str(row[3]) + " \n")
     f.close()
 
 mainSimulation()

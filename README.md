@@ -16,3 +16,5 @@ energy level if bear is eating. Bear is dead if energy level drops below 0.
 
 Load all the necessary classes and run the Fish and Bear simulation. In description document
 include runtime screenshots of above solutions.
+
+<img width="847" alt="Screenshot 2023-11-13 at 19 45 46" src="https://github.com/danieladupusamezgaile/Python-pw5/assets/113204311/b36dcdef-8c30-4b14-83b9-9050f37e10b9">

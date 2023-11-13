@@ -20,7 +20,7 @@ class World:
         self.__wTurtle = turtle.Turtle()
         # create screen object:
         self.__wScreen = turtle.Screen()
-        # set the screen no cols and rows the same as grids cols and rows:
+        # set the screen num of cols and rows the same as grids cols and rows:
         self.__wScreen.setworldcoordinates(0, 0, self.__maxX - 1, 
                                            self.__maxY - 1)
         # add gifs to the screen object:
@@ -89,7 +89,7 @@ class World:
            randomThing = self.__thingList[aThing]
            randomThing.liveALittle()
     
-    # check if in the coordinates there are no fish or bears:
+    # check if in the coordinates there are no things:
     def emptyLocation(self, x, y):
         if self.__grid[y][x] == None:
             return True
@@ -102,32 +102,35 @@ class World:
     def freezeWorld(self):
         self.__wScreen.exitonclick()
     
+    # count fish
     def countFish(self):
-        noFish = 0
+        numOfFish = 0
         for i in range(self.__maxX):
             for j in range(self.__maxY):
                 if (not self.emptyLocation(i, j)) and \
                     isinstance(self.lookAtLocation(i, j), Fish):
-                    noFish = noFish + 1
-        return noFish
+                    numOfFish = numOfFish + 1
+        return numOfFish
     
+    # count bears
     def countBears(self):
-        noBears = 0
+        numOfBears = 0
         for i in range(self.__maxX):
             for j in range(self.__maxY):
                 if (not self.emptyLocation(i, j)) and \
                     isinstance(self.lookAtLocation(i, j), Bear):
-                    noBears = noBears + 1
-        return noBears
+                    numOfBears = numOfBears + 1
+        return numOfBears
     
+    # count plants
     def countPlants(self):
-        noPlants = 0
+        numOfPlants = 0
         for i in range(self.__maxX):
             for j in range(self.__maxY):
                 if (not self.emptyLocation(i, j)) and \
                     isinstance(self.lookAtLocation(i, j), Plant):
-                    noPlants = noPlants + 1
-        return noPlants
+                    numOfPlants = numOfPlants + 1
+        return numOfPlants
     
 class Plant:
     def __init__(self):
@@ -213,7 +216,6 @@ class Fish:
         # set the turtle postitions:
         self.__xPos = 0
         self.__yPos = 0
-        # set world to empty:
         self.__world = None
 
         self.__breedTick = 0
@@ -259,7 +261,7 @@ class Fish:
             # check if the coordinate is in the grid:
             if 0 <= newX < self.__world.getMaxX()  and \
                   0 <= newY < self.__world.getMaxY():
-                # if coordinate is not empty then there is a fish
+                # if coordinate is not empty then note that there is a fish
                 if (not self.__world.emptyLocation(newX, newY)) and \
                     isinstance(self.__world.lookAtLocation(newX, newY), Fish):
                     adjFish = adjFish + 1
@@ -346,7 +348,7 @@ class Fish:
             self.move(preyX, preyY)            #move to the plants location
             self.__starveTick = 0
         else:
-            self.__starveTick = self.__starveTick + 1
+            self.__starveTick = self.__starveTick + 1    # increase starveTick
 
 class Bear:
     def __init__(self):
@@ -410,7 +412,7 @@ class Bear:
            childThing = Bear()
            self.__world.addThing(childThing, nextX, nextY)
            self.__breedTick = 0     #reset breedTick
-           self.__energyTick = self.__energyTick - 1
+           self.__energyTick = self.__energyTick - 1    # decrease energyTick
 
     def tryToMove(self):
         offsetList = [(-1,1), (0,1), (1,1),
@@ -429,7 +431,7 @@ class Bear:
 
         if self.__world.emptyLocation(nextX, nextY):
            self.move(nextX, nextY)
-           self.__energyTick = self.__energyTick - 1
+           self.__energyTick = self.__energyTick - 1    # decrease energyTick
 
     def liveALittle(self):
 
@@ -472,7 +474,7 @@ class Bear:
             self.__world.delThing(randomPrey)  #delete the Fish
             self.move(preyX, preyY)            #move to the Fishs location
             self.__starveTick = 0
-            self.__energyTick = self.__energyTick + 1
+            self.__energyTick = self.__energyTick + 1    # increase energyTick
         else:
             self.__starveTick = self.__starveTick + 1
 
@@ -481,7 +483,6 @@ def mainSimulation():
     numberOfFish = 10
     numberOfPlants = 10
     worldLifeTime = 2500
-    # worldLifeTime = 300
     worldWidth = 50
     worldHeight = 25
  
@@ -490,7 +491,7 @@ def mainSimulation():
     # draw the grid:
     myWorld.draw()
 
-    # add 10 fish:
+    # add fish:
     for i in range(numberOfFish):
         # create fish object:
         newFish = Fish()
@@ -498,15 +499,15 @@ def mainSimulation():
         x = random.randrange(myWorld.getMaxX())
         # set random number between 0 and max height:
         y = random.randrange(myWorld.getMaxY())
-        # while random generated coordinates are not empty:
+        # when random generated coordinates are not empty:
         while not myWorld.emptyLocation(x, y):
-            # set random coordinates:
+            # set new random coordinates:
             x = random.randrange(myWorld.getMaxX())
             y = random.randrange(myWorld.getMaxY())
         # add fish to the random generated coordinates:
         myWorld.addThing(newFish, x, y)
 
-    # add 10 bears:
+    # add bears:
     for i in range(numberOfBears):
         newBear = Bear()
         x = random.randrange(myWorld.getMaxX())
@@ -516,7 +517,7 @@ def mainSimulation():
             y = random.randrange(myWorld.getMaxY())
         myWorld.addThing(newBear, x, y)
 
-        # add 10 plants:
+        # add plants:
     for i in range(numberOfPlants):
         newPlant = Plant()
         x = random.randrange(myWorld.getMaxX())
@@ -528,10 +529,15 @@ def mainSimulation():
 
     f = open("table.txt", "a")
     for i in range(worldLifeTime):
+        arr = []
         numOfFish = myWorld.countFish()
         numOfBears = myWorld.countBears()
         numOfPlants = myWorld.countPlants()
-        f.write("Time: " + str(i) + "; Num of Fish:  " + str(numOfFish) + "; Num of bears: " + str(numOfBears) +  "; Num of plants: " + str(numOfPlants) + " \n")
+        arr.append(str(i))
+        arr.append(str(numOfFish))
+        arr.append(str(numOfBears))
+        arr.append(str(numOfPlants))
+        f.write("Time: " + arr[0] + "; Num of Fish:  " + arr[1] + "; Num of bears: " + arr[2] +  "; Num of plants: " + arr[3] + " \n")
         myWorld.liveALittle()
     myWorld.freezeWorld()
     f.close()

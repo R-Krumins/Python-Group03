@@ -136,9 +136,9 @@ class World:
 
 
 def mainSimulation():
-    numberOfBears = 2
-    numberOfFish = 2
-    numberOfPlants = 2
+    numberOfBears = 10
+    numberOfFish = 10
+    numberOfPlants = 10
     worldLifeTime = 2500
     worldWidth = 50
     worldHeight = 25

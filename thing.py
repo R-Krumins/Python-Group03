@@ -41,13 +41,6 @@ class Thing:
     def hide(self):
         self._turtle.hideturtle()
 
-
-    def liveALittle(self):
-        self._breedTick = self._breedTick + 1
-        if self._breedTick >= 5:
-            self.tryToBreed()
-
-
     def tryToBreed(self):
         offsetList = [(-1,1), (0,1), (1,1),
                       (-1,0),        (1,0),
@@ -159,15 +152,14 @@ class Bear(Animal):
             
 
         if(self.tryToEat(Fish) == 1):
-            self.__energyTick = self.__energyTick + 1 # decrease energyTick
+            self.__energyTick = self.__energyTick + 1 # increase energyTick
 
         if self._starveTick == 10:  #if not eaten for 10 ticks, die
             self._world.delThing(self)
+            return
         else:
             if (self.tryToMove() == 1):
                self.__energyTick = self.__energyTick - 1    # decrease energyTick 
-
-        print(self, ":", self.__energyTick)
 
 
 class Fish(Animal):
@@ -193,6 +185,7 @@ class Fish(Animal):
 
         if adjFish >= 2:   #if 2 or more adjacent Fish, die
             self._world.delThing(self)
+            return
         else:
             # increase breedtick by 1:
             self._breedTick = self._breedTick + 1

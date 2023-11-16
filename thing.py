@@ -71,6 +71,7 @@ class Thing:
            childThing = type(self)()
            self._world.addThing(childThing, nextX, nextY)
            self._breedTick = 0     #reset breedTick
+           return 1 # return status code of 1 if successfuly breaded
 
 
 class Animal(Thing):
@@ -101,6 +102,7 @@ class Animal(Thing):
         # move to the coordinate if empty
         if self._world.emptyLocation(nextX, nextY):
            self.move(nextX, nextY)
+           return 1 # return status code of 1 if successfuly moved
 
     def tryToEat(self, validPrey):
         offsetList = [(-1,1), (0,1) ,(1,1),
@@ -126,6 +128,7 @@ class Animal(Thing):
             self._world.delThing(randomPrey)  #delete the prey
             self.move(preyX, preyY)            #move to the preys location
             self._starveTick = 0
+            return 1 # return status code of 1 if successfuly ate
         else:
             self._starveTick = self._starveTick + 1    # increase starveTick
     
@@ -141,22 +144,30 @@ class Plant(Thing):
 class Bear(Animal):
     def __init__(self):
         super().__init__("Bear.gif")
+        self.__energyTick = 5
 
     def liveALittle(self):
 
-        # if self.__energyTick == 0:  #if energy gets to 0, die
-        #     self._world.delThing(self)
+        if self.__energyTick <= 0:  #if energy gets to 0 or below, die
+            self._world.delThing(self)
+            return
 
         self._breedTick = self._breedTick + 2
         if self._breedTick >= 8:  #if alive 8 or more ticks, breed
-            self.tryToBreed()
+            if(self.tryToBreed() == 1):
+                self.__energyTick = self.__energyTick - 1  # decrease energyTick
+            
 
-        self.tryToEat(Fish)
+        if(self.tryToEat(Fish) == 1):
+            self.__energyTick = self.__energyTick + 1 # decrease energyTick
 
         if self._starveTick == 10:  #if not eaten for 10 ticks, die
             self._world.delThing(self)
         else:
-            self.tryToMove()
+            if (self.tryToMove() == 1):
+               self.__energyTick = self.__energyTick - 1    # decrease energyTick 
+
+        print(self, ":", self.__energyTick)
 
 
 class Fish(Animal):

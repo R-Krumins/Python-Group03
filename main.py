@@ -2,6 +2,7 @@ import turtle
 import random
 import thing
 from configparser import ConfigParser
+import logging
 
 
 class World:
@@ -138,6 +139,9 @@ class World:
 
 
 def mainSimulation():
+    #setup logger
+    logging.basicConfig(filename="./sim.log", level=logging.INFO, format="%(asctime)s - %(message)s")
+    
     #read values from config 
     print("[main.py] Fetching values from config file ...")
     try:
@@ -198,28 +202,13 @@ def mainSimulation():
             y = random.randrange(myWorld.getMaxY())
         myWorld.addThing(newPlant, x, y)
 
-    all = []
+    
     for i in range(worldLifeTime):
         myWorld.liveALittle()
-
-        row = []
-        numOfFish = myWorld.countFish()
-        numOfBears = myWorld.countBears()
-        numOfPlants = myWorld.countPlants()
-        row.append(i)
-        row.append(numOfFish)
-        row.append(numOfBears)
-        row.append(numOfPlants)
-        all.append(row)
+        #log fish and bear count to log
+        logging.info("Bears: {}  Fish: {}".format(myWorld.countBears(), myWorld.countFish()))
         
     myWorld.freezeWorld()
 
-    f = open("table.txt", "a")
-    for i in range(len(all)):
-        row = []
-        for j in range(len(all[i])):
-            row.append(all[i][j])
-        f.write("Time: " + str(row[0]) + "; Num of Fish:  " + str(row[1]) + "; Num of bears: " + str(row[2]) +  "; Num of plants: " + str(row[3]) + " \n")
-    f.close()
 
 mainSimulation()

@@ -26,7 +26,7 @@ include runtime screenshots of above solutions.
 
 # The Solution
 
-## Inheretince implementation
+## Inheretince implementation & Bear energy
 
 The original code base had a lot of redudency, so we reduced the code size by 30% by implimenting inheritence. We identified the code shared by Plant, Bear and Fish class and consolidate it.
 
@@ -38,7 +38,13 @@ Creating the following code hierarchy:
 
 However this approach came in conflict with Bear energy functinonality. The bear class needed to know the result of tryToEat(), tryToBreed() and tryToMove() that is located in the parent class Animal in order to decide if to increase or decrease energy.
 
-The solution was to this problem was to make it so that the aforementioned methods return status code 1 for success (ie. if successfuly breaded, return 1). Thus the bear or any other child class can use this information for internal logic.
+The solution was for this problem was to make it so that the aforementioned methods return status code 1 for success (ie. if successfuly breaded, return 1). Thus the bear or any other child class can use this information for internal logic.
+
+## Logging
+
+For each simulation tick, the count of fish and bears is logged in sim.log file along with the asc time. This is done via th python logging module.
+
+**[!] sim.log is listed in .gitignore**
 
 # Aditional
 

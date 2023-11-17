@@ -1,6 +1,8 @@
 import turtle
 import random
 import thing
+from configparser import ConfigParser
+
 
 class World:
     # constructor
@@ -136,12 +138,24 @@ class World:
 
 
 def mainSimulation():
-    numberOfBears = 10
-    numberOfFish = 10
-    numberOfPlants = 10
-    worldLifeTime = 2500
-    worldWidth = 50
-    worldHeight = 25
+    #read values from config 
+    print("[main.py] Fetching values from config file ...")
+    try:
+        config = ConfigParser()
+        config.read("config.ini")
+
+        numberOfBears = config.getint("world", "numberOfBears")
+        numberOfFish = config.getint("world", "numberOfFish")
+        numberOfPlants = config.getint("world", "numberOfPlants")
+        worldLifeTime = config.getint("world", "worldLifeTime")
+        worldWidth = config.getint("world", "worldWidth")
+        worldHeight = config.getint("world", "worldHeight")
+
+    except Exception as e:
+        print("Error:",e)
+        exit()
+    else:
+        print("SUCCESS!")
  
     # create world class object:
     myWorld = World(worldWidth, worldHeight)

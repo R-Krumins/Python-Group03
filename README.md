@@ -22,6 +22,8 @@ energy level if bear is eating. Bear is dead if energy level drops below 0.
 Load all the necessary classes and run the Fish and Bear simulation. In description document
 include runtime screenshots of above solutions.
 
+<img width="847" alt="Screenshot 2023-11-13 at 19 45 46" src="https://github.com/danieladupusamezgaile/Python-pw5/assets/113204311/b36dcdef-8c30-4b14-83b9-9050f37e10b9">
+
 # The Solution
 
 ## Inheretince implementation
@@ -38,4 +40,13 @@ However this approach came in conflict with Bear energy functinonality. The bear
 
 The solution was to this problem was to make it so that the aforementioned methods return status code 1 for success (ie. if successfuly breaded, return 1). Thus the bear or any other child class can use this information for internal logic.
 
-<img width="847" alt="Screenshot 2023-11-13 at 19 45 46" src="https://github.com/danieladupusamezgaile/Python-pw5/assets/113204311/b36dcdef-8c30-4b14-83b9-9050f37e10b9">
+# Aditional
+
+## Config file
+
+Many of the programs values have been moved to the **config.ini** file. This way all simulatinos parameters can be easily modified from one place.
+
+> thing.py reads config on startup  
+> main.py reads config file on the execution of mainSimulation()
+
+**[!] config.ini is listed in .gitignore**
